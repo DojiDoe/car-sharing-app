@@ -1,6 +1,7 @@
 package doji.doe.carsharing.controller;
 
 import doji.doe.carsharing.dto.UserLoginRequestDto;
+import doji.doe.carsharing.dto.UserLoginResponseDto;
 import doji.doe.carsharing.dto.UserRegistrationRequestDto;
 import doji.doe.carsharing.dto.UserRegistrationResponseDto;
 import doji.doe.carsharing.security.AuthenticationService;
@@ -24,7 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody @Valid UserLoginRequestDto requestDto) {
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
     }
 }

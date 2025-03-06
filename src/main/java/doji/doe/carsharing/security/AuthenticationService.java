@@ -1,23 +1,24 @@
 package doji.doe.carsharing.security;
 
 import doji.doe.carsharing.dto.UserLoginRequestDto;
-import doji.doe.carsharing.model.User;
-import doji.doe.carsharing.repository.UserRepository;
-import java.util.Optional;
+import doji.doe.carsharing.dto.UserLoginResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
 
-    public boolean authenticate(UserLoginRequestDto requestDto) {
-        Optional<User> user = userRepository.findByEmail(requestDto.email());
-        if (user.isEmpty()) {
-            return false;
-        }
-        String userPasswordFromDb = user.get().getPassword();
-        return requestDto.password().equals(userPasswordFromDb);
+    public UserLoginResponseDto authenticate(UserLoginRequestDto requestDto) {
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.password())
+        );
+        String token = jwtUtil.generateToken(authentication.getName());
+        return new UserLoginResponseDto(token);
     }
 }
