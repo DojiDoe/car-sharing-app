@@ -2,15 +2,25 @@ package doji.doe.carsharing.mapper;
 
 import doji.doe.carsharing.config.MapperConfig;
 import doji.doe.carsharing.dto.UserRegistrationRequestDto;
-import doji.doe.carsharing.dto.UserRegistrationResponseDto;
+import doji.doe.carsharing.dto.UserResponseDto;
+import doji.doe.carsharing.dto.UserUpdateProfileInfoRequestDto;
 import doji.doe.carsharing.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface UserMapper {
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     User toModel(UserRegistrationRequestDto requestDto);
 
-    UserRegistrationResponseDto toDto(User user);
+    UserResponseDto toUserResponseDto(User user);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
+    void updateUser(@MappingTarget User user, UserUpdateProfileInfoRequestDto requestDto);
 }

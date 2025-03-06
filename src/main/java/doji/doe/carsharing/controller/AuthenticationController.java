@@ -3,7 +3,7 @@ package doji.doe.carsharing.controller;
 import doji.doe.carsharing.dto.UserLoginRequestDto;
 import doji.doe.carsharing.dto.UserLoginResponseDto;
 import doji.doe.carsharing.dto.UserRegistrationRequestDto;
-import doji.doe.carsharing.dto.UserRegistrationResponseDto;
+import doji.doe.carsharing.dto.UserResponseDto;
 import doji.doe.carsharing.security.AuthenticationService;
 import doji.doe.carsharing.service.UserService;
 import jakarta.validation.Valid;
@@ -19,7 +19,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public UserRegistrationResponseDto registerUser(
+    public UserResponseDto registerUser(
             @RequestBody @Valid UserRegistrationRequestDto requestDto) {
         return userService.register(requestDto);
     }
