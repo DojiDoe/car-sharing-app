@@ -1,9 +1,9 @@
 package doji.doe.carsharing.mapper;
 
 import doji.doe.carsharing.config.MapperConfig;
-import doji.doe.carsharing.dto.UserRegistrationRequestDto;
-import doji.doe.carsharing.dto.UserResponseDto;
-import doji.doe.carsharing.dto.UserUpdateProfileInfoRequestDto;
+import doji.doe.carsharing.dto.user.UserRegistrationRequestDto;
+import doji.doe.carsharing.dto.user.UserResponseDto;
+import doji.doe.carsharing.dto.user.UserUpdateProfileInfoRequestDto;
 import doji.doe.carsharing.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

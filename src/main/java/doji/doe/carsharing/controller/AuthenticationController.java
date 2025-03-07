@@ -1,9 +1,9 @@
 package doji.doe.carsharing.controller;
 
-import doji.doe.carsharing.dto.UserLoginRequestDto;
-import doji.doe.carsharing.dto.UserLoginResponseDto;
-import doji.doe.carsharing.dto.UserRegistrationRequestDto;
-import doji.doe.carsharing.dto.UserResponseDto;
+import doji.doe.carsharing.dto.user.UserLoginRequestDto;
+import doji.doe.carsharing.dto.user.UserLoginResponseDto;
+import doji.doe.carsharing.dto.user.UserRegistrationRequestDto;
+import doji.doe.carsharing.dto.user.UserResponseDto;
 import doji.doe.carsharing.security.AuthenticationService;
 import doji.doe.carsharing.service.UserService;
 import jakarta.validation.Valid;

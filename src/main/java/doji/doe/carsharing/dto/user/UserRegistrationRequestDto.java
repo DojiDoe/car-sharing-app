@@ -1,4 +1,4 @@
-package doji.doe.carsharing.dto;
+package doji.doe.carsharing.dto.user;
 
 import doji.doe.carsharing.validation.FieldMatch;
 import jakarta.validation.constraints.Email;

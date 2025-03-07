@@ -1,4 +1,4 @@
-package doji.doe.carsharing.dto;
+package doji.doe.carsharing.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

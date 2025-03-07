@@ -1,4 +1,4 @@
-package doji.doe.carsharing.dto;
+package doji.doe.carsharing.dto.user;
 
 import doji.doe.carsharing.model.User;
 import jakarta.validation.constraints.NotNull;

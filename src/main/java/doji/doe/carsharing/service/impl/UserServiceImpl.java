@@ -1,13 +1,14 @@
-package doji.doe.carsharing.service;
+package doji.doe.carsharing.service.impl;
 
-import doji.doe.carsharing.dto.UserRegistrationRequestDto;
-import doji.doe.carsharing.dto.UserResponseDto;
-import doji.doe.carsharing.dto.UserUpdateProfileInfoRequestDto;
-import doji.doe.carsharing.dto.UserUpdateRoleRequestDto;
+import doji.doe.carsharing.dto.user.UserRegistrationRequestDto;
+import doji.doe.carsharing.dto.user.UserResponseDto;
+import doji.doe.carsharing.dto.user.UserUpdateProfileInfoRequestDto;
+import doji.doe.carsharing.dto.user.UserUpdateRoleRequestDto;
 import doji.doe.carsharing.exception.EntityNotFoundException;
 import doji.doe.carsharing.mapper.UserMapper;
 import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.UserRepository;
+import doji.doe.carsharing.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
