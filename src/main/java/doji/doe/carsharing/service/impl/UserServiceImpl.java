@@ -5,6 +5,7 @@ import doji.doe.carsharing.dto.user.UserResponseDto;
 import doji.doe.carsharing.dto.user.UserUpdateProfileInfoRequestDto;
 import doji.doe.carsharing.dto.user.UserUpdateRoleRequestDto;
 import doji.doe.carsharing.exception.EntityNotFoundException;
+import doji.doe.carsharing.exception.RegistrationException;
 import doji.doe.carsharing.mapper.UserMapper;
 import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.UserRepository;
@@ -22,9 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto) {
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new RegistrationException("Can't register user");
+        }
         User user = userMapper.toModel(requestDto);
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setRole(User.Role.CUSTOMER);
+        user.setRole(User.Role.ROLE_CUSTOMER);
         User saved = userRepository.save(user);
         return userMapper.toUserResponseDto(saved);
     }

@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-admin-user
+      author: mateacedemy
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: email
+                  value: "admin@gmail.com"
+              - column:
+                  name: first_name
+                  value: "Admin"
+              - column:
+                  name: last_name
+                  value: "Shevchenko"
+              - column:
+                  name: password
+                  value: "$2a$10$1i40TYjogTCeCjpnQvOr3OniXGD6S4GxXdcHX1qsc9mUwTuzwHxeC"
+              - column:
+                  name: role
+                  value: "ROLE_MANAGER"

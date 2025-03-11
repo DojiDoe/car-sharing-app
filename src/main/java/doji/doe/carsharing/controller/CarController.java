@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarController {
     private final CarService carService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public CarDetailedResponseDto createCar(@RequestBody @Valid CarCreateRequestDto requestDto) {
         return carService.save(requestDto);
@@ -40,12 +42,14 @@ public class CarController {
         return carService.getById(id);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
     public CarDetailedResponseDto updateCar(@PathVariable Long id,
                                             @RequestBody @Valid CarCreateRequestDto requestDto) {
         return carService.updateCar(id, requestDto);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PatchMapping("/{id}")
     public CarDetailedResponseDto updateCarInventory(
             @PathVariable Long id,
@@ -53,6 +57,7 @@ public class CarController {
         return carService.updateCarInventory(id, requestDto);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         carService.deleteById(id);
