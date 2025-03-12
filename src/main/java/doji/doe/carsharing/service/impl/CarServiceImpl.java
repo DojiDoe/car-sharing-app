@@ -7,7 +7,7 @@ import doji.doe.carsharing.dto.car.CarUpdateRequestDto;
 import doji.doe.carsharing.exception.EntityNotFoundException;
 import doji.doe.carsharing.mapper.CarMapper;
 import doji.doe.carsharing.model.Car;
-import doji.doe.carsharing.repository.CarRepository;
+import doji.doe.carsharing.repository.car.CarRepository;
 import doji.doe.carsharing.service.CarService;
 import jakarta.transaction.Transactional;
 import java.util.List;

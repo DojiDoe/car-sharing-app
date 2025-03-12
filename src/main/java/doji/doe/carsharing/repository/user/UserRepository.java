@@ -1,4 +1,4 @@
-package doji.doe.carsharing.repository;
+package doji.doe.carsharing.repository.user;
 
 import doji.doe.carsharing.model.User;
 import java.util.Optional;

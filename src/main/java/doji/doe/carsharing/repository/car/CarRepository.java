@@ -1,4 +1,4 @@
-package doji.doe.carsharing.repository;
+package doji.doe.carsharing.repository.car;
 
 import doji.doe.carsharing.model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;

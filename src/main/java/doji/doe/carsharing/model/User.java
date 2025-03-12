@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 

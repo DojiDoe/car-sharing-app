@@ -8,7 +8,7 @@ import doji.doe.carsharing.exception.EntityNotFoundException;
 import doji.doe.carsharing.exception.RegistrationException;
 import doji.doe.carsharing.mapper.UserMapper;
 import doji.doe.carsharing.model.User;
-import doji.doe.carsharing.repository.UserRepository;
+import doji.doe.carsharing.repository.user.UserRepository;
 import doji.doe.carsharing.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
