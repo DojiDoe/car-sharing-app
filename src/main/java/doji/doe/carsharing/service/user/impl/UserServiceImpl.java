@@ -1,4 +1,4 @@
-package doji.doe.carsharing.service.impl;
+package doji.doe.carsharing.service.user.impl;
 
 import doji.doe.carsharing.dto.user.UserRegistrationRequestDto;
 import doji.doe.carsharing.dto.user.UserResponseDto;
@@ -9,7 +9,7 @@ import doji.doe.carsharing.exception.RegistrationException;
 import doji.doe.carsharing.mapper.UserMapper;
 import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.user.UserRepository;
-import doji.doe.carsharing.service.UserService;
+import doji.doe.carsharing.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package doji.doe.carsharing.service;
+package doji.doe.carsharing.service.car;
 
 import doji.doe.carsharing.dto.car.CarCreateRequestDto;
 import doji.doe.carsharing.dto.car.CarDetailedResponseDto;

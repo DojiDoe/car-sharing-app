@@ -4,7 +4,7 @@ import doji.doe.carsharing.dto.car.CarCreateRequestDto;
 import doji.doe.carsharing.dto.car.CarDetailedResponseDto;
 import doji.doe.carsharing.dto.car.CarResponseDto;
 import doji.doe.carsharing.dto.car.CarUpdateRequestDto;
-import doji.doe.carsharing.service.CarService;
+import doji.doe.carsharing.service.car.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

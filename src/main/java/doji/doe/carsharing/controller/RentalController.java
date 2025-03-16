@@ -6,7 +6,7 @@ import doji.doe.carsharing.dto.rental.RentalResponseDto;
 import doji.doe.carsharing.dto.rental.RentalReturnRequestDto;
 import doji.doe.carsharing.dto.rental.RentalSearchParametersDto;
 import doji.doe.carsharing.model.User;
-import doji.doe.carsharing.service.RentalService;
+import doji.doe.carsharing.service.rental.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -5,7 +5,7 @@ import doji.doe.carsharing.dto.user.UserLoginResponseDto;
 import doji.doe.carsharing.dto.user.UserRegistrationRequestDto;
 import doji.doe.carsharing.dto.user.UserResponseDto;
 import doji.doe.carsharing.security.AuthenticationService;
-import doji.doe.carsharing.service.UserService;
+import doji.doe.carsharing.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
