@@ -1,4 +1,4 @@
-package doji.doe.carsharing.service.impl;
+package doji.doe.carsharing.service.car.impl;
 
 import doji.doe.carsharing.dto.car.CarCreateRequestDto;
 import doji.doe.carsharing.dto.car.CarDetailedResponseDto;
@@ -8,7 +8,7 @@ import doji.doe.carsharing.exception.EntityNotFoundException;
 import doji.doe.carsharing.mapper.CarMapper;
 import doji.doe.carsharing.model.Car;
 import doji.doe.carsharing.repository.car.CarRepository;
-import doji.doe.carsharing.service.CarService;
+import doji.doe.carsharing.service.car.CarService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

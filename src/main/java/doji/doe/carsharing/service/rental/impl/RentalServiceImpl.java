@@ -1,4 +1,4 @@
-package doji.doe.carsharing.service.impl;
+package doji.doe.carsharing.service.rental.impl;
 
 import doji.doe.carsharing.dto.rental.RentalCreateRequestDto;
 import doji.doe.carsharing.dto.rental.RentalDetailedResponseDto;
@@ -14,7 +14,7 @@ import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.car.CarRepository;
 import doji.doe.carsharing.repository.rental.RentalRepository;
 import doji.doe.carsharing.repository.rental.RentalSpecificationBuilder;
-import doji.doe.carsharing.service.RentalService;
+import doji.doe.carsharing.service.rental.RentalService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

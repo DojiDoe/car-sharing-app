@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-car-table
+      id: create-payment-table
       author: dojidoe
       changes:
         - createTable:
-            tableName: cars
+            tableName: payments
             columns:
               - column:
                   name: id
@@ -14,12 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: model
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: brand
+                  name: status
                   type: varchar(255)
                   constraints:
                     nullable: false
@@ -29,13 +24,32 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: inventory
-                  type: int
+                  name: rental_id
+                  type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: daily_fee
+                  name: session_url
+                  type: varchar(510)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: amount_to_pay
                   type: decimal
                   constraints:
                     nullable: false
+              - addForeignKeyConstraint:
+                  baseTableName: payments
+                  baseColumnNames: rental_id
+                  referencedTableName: rentals
+                  referencedColumnNames: id
+                  constraintName: fk_payments_rentals
+
+
 
