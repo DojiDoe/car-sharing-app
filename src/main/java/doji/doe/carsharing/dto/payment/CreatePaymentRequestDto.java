@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class PaymentRequestDto {
+public class CreatePaymentRequestDto {
     @Positive
     private Long rentalId;
     @NotNull
