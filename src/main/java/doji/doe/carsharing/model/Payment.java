@@ -43,7 +43,8 @@ public class Payment {
 
     public enum Status {
         PENDING,
-        PAID
+        PAID,
+        CANCEL
     }
 
     public enum Type {
