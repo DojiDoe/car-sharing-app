@@ -3,6 +3,7 @@ package doji.doe.carsharing.service.payment.impl;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
+import doji.doe.carsharing.dto.notification.NotificationType;
 import doji.doe.carsharing.dto.payment.CreatePaymentRequestDto;
 import doji.doe.carsharing.dto.payment.PaymentDetailedResponseDto;
 import doji.doe.carsharing.dto.payment.PaymentResponseDto;
@@ -15,6 +16,8 @@ import doji.doe.carsharing.model.Rental;
 import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.payment.PaymentRepository;
 import doji.doe.carsharing.repository.rental.RentalRepository;
+import doji.doe.carsharing.service.notification.NotificationTemplates;
+import doji.doe.carsharing.service.notification.TelegramNotificationService;
 import doji.doe.carsharing.service.payment.PaymentService;
 import doji.doe.carsharing.service.payment.StripeService;
 import doji.doe.carsharing.service.payment.strategy.CalculationService;
@@ -39,6 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final StripeService stripeService;
     private final CalculationServiceFactory calculationServiceFactory;
     private final PaymentMapper paymentMapper;
+    private final TelegramNotificationService notificationService;
 
     @Override
     public List<PaymentDetailedResponseDto> getAll(User user, Long id) {
@@ -82,7 +86,13 @@ public class PaymentServiceImpl implements PaymentService {
             Session session = Session.retrieve(sessionId);
             if (session.getStatus().equals(COMPLETED_STATUS)) {
                 payment.setStatus(Payment.Status.PAID);
-                return paymentMapper.toStatusDto(paymentRepository.save(payment));
+                Payment savedPayment = paymentRepository.save(payment);
+                String message = NotificationTemplates.getTemplate(NotificationType.PAYMENT_SUCCESS,
+                        payment.getId(),
+                        payment.getAmountToPay(),
+                        payment.getRental().getId());
+                notificationService.notifyAdmin(message);
+                return paymentMapper.toStatusDto(savedPayment);
             } else {
                 throw new PaymentException("Payment checkout session with id: "
                         + sessionId + " is not completed");
@@ -99,7 +109,12 @@ public class PaymentServiceImpl implements PaymentService {
                 () -> new EntityNotFoundException("Can't find a payment by sessionId: " + sessionId)
         );
         payment.setStatus(Payment.Status.CANCEL);
-        return paymentMapper.toStatusDto(paymentRepository.save(payment));
+        Payment savedPayment = paymentRepository.save(payment);
+        String message = NotificationTemplates.getTemplate(NotificationType.PAYMENT_FAILED,
+                payment.getId(),
+                payment.getRental().getId());
+        notificationService.notifyAdmin(message);
+        return paymentMapper.toStatusDto(savedPayment);
     }
 
     private static Payment preparePayment(Session session,

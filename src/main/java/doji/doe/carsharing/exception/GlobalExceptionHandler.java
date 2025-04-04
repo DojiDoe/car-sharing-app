@@ -42,6 +42,14 @@ public class GlobalExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(TelegramNotificationException.class)
+    public ResponseEntity<Object> handleTelegramNotificationException(
+            TelegramNotificationException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex) {
@@ -53,6 +61,12 @@ public class GlobalExceptionHandler {
                 .toList();
         body.put("errors", errors);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public void handleException(Exception ex) {
+        System.err.println("An error occurred: " + ex.getMessage());
+        ex.printStackTrace();
     }
 
     private String getErrorMessage(ObjectError e) {

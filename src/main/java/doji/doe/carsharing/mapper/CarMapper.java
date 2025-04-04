@@ -15,7 +15,6 @@ public interface CarMapper {
     @Mapping(target = "id", ignore = true)
     Car toModel(CarCreateRequestDto requestDto);
 
-    @Mapping(target = "id", ignore = true)
     CarResponseDto toResponseDto(Car car);
 
     CarDetailedResponseDto toDetailedResponseDto(Car car);

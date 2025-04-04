@@ -1,5 +1,6 @@
 package doji.doe.carsharing.service.rental.impl;
 
+import doji.doe.carsharing.dto.notification.NotificationType;
 import doji.doe.carsharing.dto.rental.RentalCreateRequestDto;
 import doji.doe.carsharing.dto.rental.RentalDetailedResponseDto;
 import doji.doe.carsharing.dto.rental.RentalResponseDto;
@@ -14,6 +15,8 @@ import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.repository.car.CarRepository;
 import doji.doe.carsharing.repository.rental.RentalRepository;
 import doji.doe.carsharing.repository.rental.RentalSpecificationBuilder;
+import doji.doe.carsharing.service.notification.NotificationTemplates;
+import doji.doe.carsharing.service.notification.TelegramNotificationService;
 import doji.doe.carsharing.service.rental.RentalService;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -30,6 +33,7 @@ public class RentalServiceImpl implements RentalService {
     private final CarRepository carRepository;
     private final RentalMapper rentalMapper;
     private final RentalSpecificationBuilder rentalSpecificationBuilder;
+    private final TelegramNotificationService notificationService;
 
     @Transactional
     @Override
@@ -42,7 +46,15 @@ public class RentalServiceImpl implements RentalService {
         }
         car.setInventory(car.getInventory() - 1);
         Rental rental = rentalMapper.toModel(requestDto, user, car);
-        return rentalMapper.toDetailedResponseDto(rentalRepository.save(rental));
+        Rental savedRental = rentalRepository.save(rental);
+        String message = NotificationTemplates.getTemplate(NotificationType.NEW_RENTAL,
+                savedRental.getId(),
+                savedRental.getCar().getId(),
+                savedRental.getUser().getId(),
+                savedRental.getRentalDate(),
+                savedRental.getReturnDate());
+        notificationService.notifyAdmin(message);
+        return rentalMapper.toDetailedResponseDto(savedRental);
     }
 
     @Override
