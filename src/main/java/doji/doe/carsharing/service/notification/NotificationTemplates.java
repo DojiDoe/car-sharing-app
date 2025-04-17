@@ -2,12 +2,12 @@ package doji.doe.carsharing.service.notification;
 
 import doji.doe.carsharing.dto.notification.NotificationType;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class NotificationTemplates {
     private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static String getTemplate(NotificationType type, Object... params) {
         return switch (type) {
@@ -15,8 +15,8 @@ public class NotificationTemplates {
                     (Long) params[0],
                     (Long) params[1],
                     (Long) params[2],
-                    (LocalDateTime) params[3],
-                    (LocalDateTime) params[4]
+                    (LocalDate) params[3],
+                    (LocalDate) params[4]
             );
             case PAYMENT_SUCCESS -> formatPaymentSuccess(
                     (Long) params[0],
@@ -27,12 +27,16 @@ public class NotificationTemplates {
                     (Long) params[0],
                     (Long) params[1]
             );
-            case OVERDUE_RENTAL -> String.format("Overdue rental created: %s", params);
+            case OVERDUE_RENTAL -> formatOverdueRental(
+                    (Long) params[0],
+                    (String) params[1],
+                    (Long) params[2]
+            );
         };
     }
 
     private static String formatNewRental(Long rentalId, Long carId, Long userId,
-                                          LocalDateTime rentalDate, LocalDateTime returnDate) {
+                                          LocalDate rentalDate, LocalDate returnDate) {
         return """
                 🚗 *New Rental Created* 🚗
                 ID: %d
@@ -54,12 +58,12 @@ public class NotificationTemplates {
                 """.formatted(paymentId, amount, rentalId);
     }
 
-    private static String formatOverdueRental(Long rentalId, String carInfo, String overduePeriod) {
+    private static String formatOverdueRental(Long rentalId, String carInfo, Long overduePeriod) {
         return """
                 ⚠️ *Overdue Rental* ⚠️
                 ID: %d
                 Car: %s
-                Overdue: %s
+                Overdue: %s days
                 """.formatted(rentalId, carInfo, overduePeriod);
     }
 
@@ -70,4 +74,5 @@ public class NotificationTemplates {
                 Rental ID: %d
                 """.formatted(paymentId, rentalId);
     }
+
 }
