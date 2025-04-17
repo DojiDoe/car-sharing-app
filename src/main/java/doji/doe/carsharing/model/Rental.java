@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +23,10 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private LocalDateTime rentalDate;
+    private LocalDate rentalDate;
     @Column(nullable = false)
-    private LocalDateTime returnDate;
-    private LocalDateTime actualReturnDate;
+    private LocalDate returnDate;
+    private LocalDate actualReturnDate;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "car_id")
     private Car car;

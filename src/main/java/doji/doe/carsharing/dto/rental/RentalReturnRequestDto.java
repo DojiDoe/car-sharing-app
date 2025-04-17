@@ -1,10 +1,10 @@
 package doji.doe.carsharing.dto.rental;
 
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record RentalReturnRequestDto(
         @NotNull
-        LocalDateTime actualReturnDate
+        LocalDate actualReturnDate
 ) {
 }
