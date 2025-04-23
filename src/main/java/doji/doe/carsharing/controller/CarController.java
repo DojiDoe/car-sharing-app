@@ -68,7 +68,7 @@ public class CarController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a book")
+    @Operation(summary = "Delete a car")
     public void delete(@PathVariable Long id) {
         carService.deleteById(id);
     }
