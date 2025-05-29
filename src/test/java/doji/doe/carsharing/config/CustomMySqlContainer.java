@@ -1,4 +1,4 @@
-package doji.doe.carsharing;
+package doji.doe.carsharing.config;
 
 import org.testcontainers.containers.MySQLContainer;
 

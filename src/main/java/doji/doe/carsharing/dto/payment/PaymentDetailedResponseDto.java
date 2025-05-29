@@ -3,8 +3,10 @@ package doji.doe.carsharing.dto.payment;
 import doji.doe.carsharing.model.Payment;
 import java.math.BigDecimal;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class PaymentDetailedResponseDto {
     private Long id;
     private Payment.Status status;

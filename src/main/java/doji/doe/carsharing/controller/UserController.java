@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}/role")
     @Operation(summary = "update a user role")
     public void updateRole(@PathVariable Long id,
@@ -39,6 +41,7 @@ public class UserController {
         return userService.getUserById(user.getId());
     }
 
+    @PreAuthorize("hasRole('CUSTOMER')")
     @PutMapping("/me")
     @Operation(summary = "update user profile info",
             description = "update profile info of authenticated user")

@@ -37,7 +37,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarDetailedResponseDto getById(Long id) {
         Car car = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a car by  id: " + id)
+                () -> new EntityNotFoundException("Can't find a car by id: " + id)
         );
         return carMapper.toDetailedResponseDto(car);
     }
@@ -46,7 +46,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarDetailedResponseDto updateCar(Long id, CarCreateRequestDto requestDto) {
         Car car = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a car by  id: " + id)
+                () -> new EntityNotFoundException("Can't find a car by id: " + id)
         );
         carMapper.updateCar(car, requestDto);
         return carMapper.toDetailedResponseDto(carRepository.save(car));
@@ -56,7 +56,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarDetailedResponseDto updateCarInventory(Long id, CarUpdateRequestDto requestDto) {
         Car car = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a car by  id: " + id)
+                () -> new EntityNotFoundException("Can't find a car by id: " + id)
         );
         carMapper.updateCarInventory(car, requestDto);
         return carMapper.toDetailedResponseDto(carRepository.save(car));
@@ -64,6 +64,9 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
+        carRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find a car by id: " + id)
+        );
         carRepository.deleteById(id);
     }
 }

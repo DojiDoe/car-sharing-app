@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     private final PaymentService paymentService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/{id}")
     @Operation(summary = "getPayments")
     public List<PaymentDetailedResponseDto> getAll(Authentication authentication,
@@ -33,6 +35,7 @@ public class PaymentController {
         return paymentService.getAll(user, id);
     }
 
+    @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping
     @Operation(summary = "create payment session")
     public PaymentResponseDto createPaymentSession(
@@ -40,6 +43,7 @@ public class PaymentController {
         return paymentService.createPaymentSession(requestDto);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/success")
     @Operation(summary = "handle successful payment")
     public PaymentStatusResponseDto handleSuccess(
@@ -47,6 +51,7 @@ public class PaymentController {
         return paymentService.handleSuccess(sessionId);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/cancel")
     @Operation(summary = "handle cancel payment")
     public PaymentStatusResponseDto handleCancel(
