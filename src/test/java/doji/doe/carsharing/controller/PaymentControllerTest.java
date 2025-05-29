@@ -17,76 +17,47 @@ import doji.doe.carsharing.dto.payment.PaymentResponseDto;
 import doji.doe.carsharing.dto.payment.PaymentStatusResponseDto;
 import doji.doe.carsharing.model.Payment;
 import doji.doe.carsharing.util.PaymentTestUtil;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import javax.sql.DataSource;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:database/clean-up-data.sql",
+        "classpath:database/users/insert-users.sql",
+        "classpath:database/cars/insert-cars.sql",
+        "classpath:database/rentals/insert-rentals.sql",
+        "classpath:database/payments/insert-payments.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class PaymentControllerTest {
     protected static MockMvc mockMvc;
-    private static final String CLEAN_UP_SCRIPT = "database/clean-up-data.sql";
-    private static final String REMOVE_CARS_SCRIPT = "database/cars/remove-cars.sql";
-    private static final String REMOVE_RENTALS_SCRIPT = "database/rentals/remove-rentals.sql";
-    private static final String REMOVE_PAYMENTS_SCRIPT = "database/payments/remove-payments.sql";
-    private static final String INSERT_USER_SCRIPT = "database/users/insert-users.sql";
-    private static final String INSERT_CARS_SCRIPT = "database/cars/insert-cars.sql";
-    private static final String INSERT_RENTALS_SCRIPT = "database/rentals/insert-rentals.sql";
-    private static final String INSERT_PAYMENTS_SCRIPT = "database/payments/insert-payments.sql";
     private static final String SESSION_ID = "cs_test_a1ATNr0UKM0uFxvpf1A3hgZMHSKxvLNCCdmSszbYE88z7"
             + "Dff8vctHLMuqT";
     @Autowired
     private ObjectMapper objectMapper;
 
     @BeforeAll
-    static void beforeAll(@Autowired DataSource dataSource,
-                          @Autowired WebApplicationContext applicationContext) throws SQLException {
+    static void beforeAll(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        teardown(dataSource);
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource(INSERT_USER_SCRIPT));
-        }
-    }
-
-    @BeforeEach
-    void setUp(@Autowired DataSource dataSource) throws SQLException {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource(INSERT_CARS_SCRIPT));
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource(INSERT_RENTALS_SCRIPT));
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource(INSERT_PAYMENTS_SCRIPT));
-        }
     }
 
     @Test
-    @WithUserDetails(value = "admin@gmail.com")
+    @WithUserDetails(value = "admin@gmail.com", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("Get all payments as user with pagination")
     void getAll_ValidId_ReturnsListOfPaymentDetailedResponseDto() throws Exception {
         // Given
@@ -154,45 +125,5 @@ public class PaymentControllerTest {
                         PaymentStatusResponseDto.class);
         assertNotNull(actual);
         assertEquals(expected, actual);
-    }
-
-    @AfterEach
-    void tearDown(@Autowired DataSource dataSource) {
-        teardownPaymentsAndRentalsAndCars(dataSource);
-    }
-
-    @AfterAll
-    static void afterAll(@Autowired DataSource dataSource) {
-        teardown(dataSource);
-    }
-
-    @SneakyThrows
-    static void teardownPaymentsAndRentalsAndCars(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(REMOVE_CARS_SCRIPT)
-            );
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(REMOVE_RENTALS_SCRIPT)
-            );
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(REMOVE_PAYMENTS_SCRIPT)
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void teardown(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(CLEAN_UP_SCRIPT)
-            );
-        }
     }
 }

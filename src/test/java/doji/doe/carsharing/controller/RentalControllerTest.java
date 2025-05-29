@@ -13,22 +13,14 @@ import doji.doe.carsharing.dto.rental.RentalCreateRequestDto;
 import doji.doe.carsharing.dto.rental.RentalDetailedResponseDto;
 import doji.doe.carsharing.dto.rental.RentalReturnRequestDto;
 import doji.doe.carsharing.util.RentalTestUtil;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import javax.sql.DataSource;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,36 +29,25 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:database/clean-up-data.sql",
+        "classpath:database/users/insert-users.sql",
+        "classpath:database/cars/insert-cars.sql",
+        "classpath:database/rentals/insert-rentals.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class RentalControllerTest {
     protected static MockMvc mockMvc;
-    private static final String CLEAN_UP_SCRIPT = "database/clean-up-data.sql";
-    private static final String REMOVE_CARS_SCRIPT = "database/cars/remove-cars.sql";
-    private static final String REMOVE_RENTALS_SCRIPT = "database/rentals/remove-rentals.sql";
-    private static final String INSERT_CARS_CLASSPATH = "classpath:database/cars/insert-cars.sql";
-    private static final String INSERT_RENTALS_CLASSPATH = "classpath:database/"
-            + "rentals/insert-rentals.sql";
-    private static final String INSERT_USER_SCRIPT = "database/users/insert-users.sql";
     @Autowired
     private ObjectMapper objectMapper;
 
     @BeforeAll
-    static void beforeAll(@Autowired DataSource dataSource,
-                          @Autowired WebApplicationContext applicationContext) throws SQLException {
+    static void beforeAll(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        teardown(dataSource);
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource(INSERT_USER_SCRIPT));
-        }
     }
 
     @Test
-    @Sql(scripts = {INSERT_CARS_CLASSPATH},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithUserDetails(value = "dojidoe@gmail.com")
     @DisplayName("Create a new rental as user")
     void createRental_ValidRequestDto_ReturnsRentalDetailedResponseDto() throws Exception {
@@ -94,8 +75,6 @@ public class RentalControllerTest {
     }
 
     @Test
-    @Sql(scripts = {INSERT_CARS_CLASSPATH, INSERT_RENTALS_CLASSPATH},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithUserDetails(value = "dojidoe@gmail.com")
     @DisplayName("Get category by valid id as user")
     void getRentalById_ValidId_ReturnsRentalDetailedResponseDto() throws Exception {
@@ -119,8 +98,6 @@ public class RentalControllerTest {
     }
 
     @Test
-    @Sql(scripts = {INSERT_CARS_CLASSPATH, INSERT_RENTALS_CLASSPATH},
-            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @WithUserDetails(value = "admin@gmail.com")
     @DisplayName("Return rental as user")
     void returnRental_ValidRequestDto_ReturnsRentalDetailedResponseDto() throws Exception {
@@ -144,46 +121,10 @@ public class RentalControllerTest {
         // Then
         RentalDetailedResponseDto actual = objectMapper
                 .readValue(result.getResponse().getContentAsString(),
-                RentalDetailedResponseDto.class);
+                        RentalDetailedResponseDto.class);
         assertNotNull(actual);
         assertNotNull(actual.getId());
         assertTrue(reflectionEquals(expected, actual, "userResponseDto"));
         assertTrue(reflectionEquals(expected.getUserResponseDto(), actual.getUserResponseDto()));
-    }
-
-    @AfterEach
-    void tearDown(@Autowired DataSource dataSource) {
-        teardownRentalsAndCars(dataSource);
-    }
-
-    @AfterAll
-    static void afterAll(@Autowired DataSource dataSource) {
-        teardown(dataSource);
-    }
-
-    @SneakyThrows
-    static void teardownRentalsAndCars(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(REMOVE_CARS_SCRIPT)
-            );
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(REMOVE_RENTALS_SCRIPT)
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void teardown(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(CLEAN_UP_SCRIPT)
-            );
-        }
     }
 }

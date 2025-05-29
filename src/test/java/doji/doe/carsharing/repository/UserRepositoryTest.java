@@ -15,12 +15,9 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Sql(scripts = {
+@Sql(scripts = {"classpath:database/users/remove-users.sql",
         "classpath:database/users/insert-users.sql",
 }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {
-        "classpath:database/users/remove-users.sql"
-}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserRepositoryTest {
     public static final String USER_EMAIL = "dojidoe@gmail.com";
     @Autowired

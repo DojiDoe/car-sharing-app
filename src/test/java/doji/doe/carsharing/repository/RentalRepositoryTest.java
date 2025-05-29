@@ -20,13 +20,11 @@ import org.springframework.test.context.jdbc.Sql;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql(scripts = {
+        "classpath:database/clean-up-data.sql",
         "classpath:database/users/insert-users.sql",
         "classpath:database/cars/insert-cars.sql",
         "classpath:database/rentals/insert-rentals.sql",
 }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {
-        "classpath:database/clean-up-data.sql"
-}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class RentalRepositoryTest {
     @Autowired
     private RentalRepository rentalRepository;
