@@ -53,9 +53,8 @@ public class UserServiceTest {
                 RegistrationException.class,
                 () -> userService.register(requestDto));
         // Then
-        String expected = USER_REGISTRATION_EXCEPTION;
         String actual = exception.getMessage();
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(USER_REGISTRATION_EXCEPTION);
         verify(userRepository, times(1)).existsByEmail(invalidEmail);
         verifyNoMoreInteractions(userRepository);
     }

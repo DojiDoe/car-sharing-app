@@ -6,6 +6,7 @@ import doji.doe.carsharing.dto.car.CarResponseDto;
 import doji.doe.carsharing.model.Car;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CarTestUtil {
@@ -73,7 +74,7 @@ public class CarTestUtil {
     }
 
     public static List<Car> getListOfCars() {
-        return Arrays.asList(getCar());
+        return Collections.singletonList(getCar());
     }
 
     public static List<CarResponseDto> getListOfCarResponseDto() {
