@@ -47,11 +47,9 @@ public class PaymentControllerTest {
             + "Dff8vctHLMuqT";
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private WebApplicationContext applicationContext;
 
     @BeforeEach
-    void setUp() {
+    void setUp(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
