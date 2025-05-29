@@ -37,9 +37,11 @@ public class UserControllerTest {
     protected static MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext applicationContext;
 
     @BeforeEach
-    void setUp(@Autowired WebApplicationContext applicationContext) {
+    void setUp() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
