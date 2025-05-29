@@ -20,10 +20,9 @@ import doji.doe.carsharing.dto.car.CarResponseDto;
 import doji.doe.carsharing.exception.EntityNotFoundException;
 import doji.doe.carsharing.service.car.CarService;
 import doji.doe.carsharing.util.CarTestUtil;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +46,8 @@ public class CarControllerTest {
     @Autowired
     private CarService carService;
 
-    @BeforeAll
-    static void beforeAll(@Autowired WebApplicationContext applicationContext) throws SQLException {
+    @BeforeEach
+    void setUp(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())

@@ -15,7 +15,7 @@ import doji.doe.carsharing.dto.rental.RentalReturnRequestDto;
 import doji.doe.carsharing.util.RentalTestUtil;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +39,8 @@ public class RentalControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    static void beforeAll(@Autowired WebApplicationContext applicationContext) {
+    @BeforeEach
+    void setUp(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())

@@ -19,7 +19,7 @@ import doji.doe.carsharing.model.Payment;
 import doji.doe.carsharing.util.PaymentTestUtil;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class PaymentControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @BeforeAll
-    static void beforeAll(@Autowired WebApplicationContext applicationContext) {
+    @BeforeEach
+    void setUp(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
