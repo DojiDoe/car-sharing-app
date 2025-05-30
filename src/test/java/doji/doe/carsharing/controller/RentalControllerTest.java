@@ -39,7 +39,6 @@ public class RentalControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-
     @BeforeEach
     void setUp(@Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
