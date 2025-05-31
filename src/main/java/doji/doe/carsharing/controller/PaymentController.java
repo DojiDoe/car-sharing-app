@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     private final PaymentService paymentService;
 
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    @Operation(summary = "getPayments")
+    @Operation(summary = "Get payments")
     public List<PaymentDetailedResponseDto> getAll(Authentication authentication,
                                                    @PathVariable Long id) {
         User user = (User) authentication.getPrincipal();
@@ -37,7 +37,7 @@ public class PaymentController {
 
     @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping
-    @Operation(summary = "create payment session")
+    @Operation(summary = "Create payment session")
     public PaymentResponseDto createPaymentSession(
             @RequestBody @Valid CreatePaymentRequestDto requestDto) {
         return paymentService.createPaymentSession(requestDto);
@@ -45,7 +45,7 @@ public class PaymentController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/success")
-    @Operation(summary = "handle successful payment")
+    @Operation(summary = "Handle successful payment")
     public PaymentStatusResponseDto handleSuccess(
             @RequestParam String sessionId) {
         return paymentService.handleSuccess(sessionId);
@@ -53,7 +53,7 @@ public class PaymentController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/cancel")
-    @Operation(summary = "handle cancel payment")
+    @Operation(summary = "Handle cancel payment")
     public PaymentStatusResponseDto handleCancel(
             @RequestParam String sessionId) {
         return paymentService.handleCancel(sessionId);

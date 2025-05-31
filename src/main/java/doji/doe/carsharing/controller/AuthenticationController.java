@@ -22,14 +22,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    @Operation(summary = "register User")
+    @Operation(summary = "Register user")
     public UserResponseDto registerUser(
             @RequestBody @Valid UserRegistrationRequestDto requestDto) {
         return userService.register(requestDto);
     }
 
     @PostMapping("/login")
-    @Operation(summary = "login User")
+    @Operation(summary = "Login user")
     public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
     }

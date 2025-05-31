@@ -40,7 +40,7 @@ public class CarController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all car", description = "Get a list of all cars")
+    @Operation(summary = "Get all cars", description = "Get a list of all cars")
     public List<CarResponseDto> getAll(Pageable pageable) {
         return carService.findAll(pageable);
     }
@@ -53,7 +53,7 @@ public class CarController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}")
-    @Operation(summary = "update a car")
+    @Operation(summary = "Update a car")
     public CarDetailedResponseDto updateCar(@PathVariable Long id,
                                             @RequestBody @Valid CarCreateRequestDto requestDto) {
         return carService.updateCar(id, requestDto);
@@ -61,7 +61,7 @@ public class CarController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @PatchMapping("/{id}")
-    @Operation(summary = "update a car inventory",
+    @Operation(summary = "Update a car inventory",
             description = "Update the amount of available cars")
     public CarDetailedResponseDto updateCarInventory(
             @PathVariable Long id,

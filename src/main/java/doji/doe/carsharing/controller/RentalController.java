@@ -43,7 +43,7 @@ public class RentalController {
     }
 
     @GetMapping
-    @Operation(summary = "get rentals by params", description = "Get a list of all"
+    @Operation(summary = "Get rentals by params", description = "Get a list of all"
             + " rentals with sent params: for customer - {isActive} "
             + "for manager - {userId(optional), isActive}")
     public List<RentalResponseDto> searchRentals(Authentication authentication,
@@ -61,7 +61,7 @@ public class RentalController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/{id}/return")
-    @Operation(summary = "return Rental")
+    @Operation(summary = "Return Rental")
     public RentalDetailedResponseDto returnRental(
             Authentication authentication,
             @PathVariable Long id,

@@ -27,15 +27,15 @@ public class UserController {
 
     @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}/role")
-    @Operation(summary = "update a user role")
+    @Operation(summary = "Update a user role")
     public void updateRole(@PathVariable Long id,
                            @RequestBody @Valid UserUpdateRoleRequestDto requestDto) {
         userService.updateRole(id, requestDto);
     }
 
     @GetMapping("/me")
-    @Operation(summary = "get user profile info",
-            description = "get profile info of authenticated user")
+    @Operation(summary = "Get user profile info",
+            description = "Get profile info of authenticated user")
     public UserResponseDto getProfileInfo(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return userService.getUserById(user.getId());
@@ -43,8 +43,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('CUSTOMER')")
     @PutMapping("/me")
-    @Operation(summary = "update user profile info",
-            description = "update profile info of authenticated user")
+    @Operation(summary = "Update user profile info",
+            description = "Update profile info of authenticated user")
     public UserResponseDto updateProfileIfo(
             Authentication authentication,
             @RequestBody @Valid UserUpdateProfileInfoRequestDto requestDto) {

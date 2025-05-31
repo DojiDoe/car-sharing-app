@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "bb848ecc-2687-42c0-96e8-967ec177fca4",
+		"name": "CarSharing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26798852"
+	},
+	"item": [
+		{
+			"name": "Authetication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"Igor@gmail.com\",\r\n    \"password\":\"qwerty123\",\r\n    \"repeatPassword\":\"qwerty123\",\r\n    \"firstName\":\"Igor\",\r\n    \"lastName\":\"Panch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/register"
+					},
+					"response": []
+				},
+				{
+					"name": "login as user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"Igor@gmail.com\",\r\n    \"password\":\"qwerty123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/login"
+					},
+					"response": []
+				},
+				{
+					"name": "login as admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"qwerty123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Update user role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI2ODk3OSwiZXhwIjoxNzQxMjk4OTc5fQ.QtrtfSZwlLmonpj86z8SvxIqK7i7VM5jkU7jmrxK4WO_w6Phblk43YJvzJPFMroO"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"MANAGER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/users/1/role"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user profile info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTI2ODk3OSwiZXhwIjoxNzQxMjk4OTc5fQ.QtrtfSZwlLmonpj86z8SvxIqK7i7VM5jkU7jmrxK4WO_w6Phblk43YJvzJPFMroO"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/users/me"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user profile info",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "create new car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM2NTczNCwiZXhwIjoxNzQxMzk1NzM0fQ.6RHvrQ3dk2oXQpPHlXXd-jUJxX7XAVow9wqkxxIWuN4G0T9ZCceyQnDDntel8jYN"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"Escape\",\r\n    \"brand\": \"Ford\",\r\n    \"type\": \"SUV\",\r\n    \"inventory\": 1,\r\n    \"dailyFee\": 8.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/cars"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all car's",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get car by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM2ODc4NiwiZXhwIjoxNzQxMzk4Nzg2fQ.ELkvLsCkIQQVm3pS3VP53Y3LaiYDEUY1YfbfiCylA7DHabZLhItnFJPJhc6Ouwot"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"Escape2\",\r\n    \"brand\": \"Ford\",\r\n    \"type\": \"SUV\",\r\n    \"inventory\": 1,\r\n    \"dailyFee\": 8.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/cars/4"
+					},
+					"response": []
+				},
+				{
+					"name": "update car inventory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM2ODc4NiwiZXhwIjoxNzQxMzk4Nzg2fQ.ELkvLsCkIQQVm3pS3VP53Y3LaiYDEUY1YfbfiCylA7DHabZLhItnFJPJhc6Ouwot"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"inventory\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/cars/3"
+					},
+					"response": []
+				},
+				{
+					"name": "delete car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM2ODc4NiwiZXhwIjoxNzQxMzk4Nzg2fQ.ELkvLsCkIQQVm3pS3VP53Y3LaiYDEUY1YfbfiCylA7DHabZLhItnFJPJhc6Ouwot"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/cars/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rental",
+			"item": [
+				{
+					"name": "create new rental",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTcwODQ2OCwiZXhwIjoxNzQxNzM4NDY4fQ.FCzl-ho05hoOgzi4NrFgouu7xmYaf47pNgNnnHBegYLC7lL4LmcIsC34mJzqMpXo"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rentalDate\" : \"2025-03-11T17:58:41.358959400\",\r\n    \"returnDate\": \"2025-03-12T17:58:41.358959400\",\r\n    \"carId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/rentals"
+					},
+					"response": []
+				},
+				{
+					"name": "Get rental by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTcwOTc0MywiZXhwIjoxNzQxNzM5NzQzfQ.QuvNhZt_BvkGiS9E7bTh8R_w57to8i-2JWq-1hoieiJ3BoPDOt0FlMNlKZqq8oMl"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/rentals/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Return rental",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTc3MzMzMiwiZXhwIjoxNzQxODAzMzMyfQ.kssivvQaTBo1jutnKZfM_0pYUFAaXiXDptsEX-0aypAnS6VZv3vNBpIaEFQzTZQh"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"actualReturnDate\": \"2025-03-12T12:58:41.358959400\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/rentals/3/return"
+					},
+					"response": []
+				},
+				{
+					"name": "Search request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yQGdtYWlsLmNvbSIsImlhdCI6MTc0MTc5MTc1NSwiZXhwIjoxNzQxODIxNzU1fQ.q_uTZ-jHRtkLmorl_N-3VvTv2T9zcQTCLTLqSfLtKAvKFXftERZqZ48AE9bXdxs5"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/rentals?isActive=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rentals"
+							],
+							"query": [
+								{
+									"key": "isActive",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Create payment Session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJJZ29yMUBnbWFpbC5jb20iLCJpYXQiOjE3NDE4NzgzMTgsImV4cCI6MTc0MTkwODMxOH0.jEHTofcVSjowfzJ9aUS-k1I2PJLDIADR-dRZ1u-IYkGD-g2WRXhQkAEfo5RAVmSJ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rentalId\": 1,\r\n    \"type\": \"PAYMENT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/payments"
+					},
+					"response": []
+				},
+				{
+					"name": "get payments by user id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "handle succes",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "handle cancel",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
