@@ -7,6 +7,7 @@ import doji.doe.carsharing.dto.payment.PaymentStatusResponseDto;
 import doji.doe.carsharing.model.User;
 import doji.doe.carsharing.service.payment.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Payments management", description = "Endpoints for managing payments")
 @RestController
 @RequestMapping("/payments")
 @RequiredArgsConstructor
